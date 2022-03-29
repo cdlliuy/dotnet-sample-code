@@ -25,7 +25,7 @@ namespace yingwebappdemo
 
             try
             {
-                AppDomain.CurrentDomain.ProcessExit += ProcessExit;
+                //AppDomain.CurrentDomain.ProcessExit += ProcessExit;
 
                 CreateHostBuilder(args).Build().RunAsync();
                 await pollingTasks(cancellationTokenSource);
@@ -37,6 +37,7 @@ namespace yingwebappdemo
             finally
             {
                 Console.WriteLine($"{DateTime.UtcNow} : Main: Executing of finally");
+	        shutdown();
             }
 
 
