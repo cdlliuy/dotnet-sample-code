@@ -1,0 +1,33 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS dotnet-tools
+WORKDIR /app
+
+RUN dotnet tool install -g dotnet-certificate-tool --version 2.0.0 \
+    && dotnet tool install -g dotnet-dump \
+    && dotnet tool install -g dotnet-trace \
+    && dotnet tool install -g dotnet-counters \
+    && dotnet tool install -g dotnet-symbol
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+WORKDIR /app
+COPY ./*.png ./
+COPY ./*.jpg ./
+COPY ./*.sh ./
+COPY ./build/* ./
+EXPOSE 80
+
+RUN apt-get update \
+    && apt-get install -y curl \
+    && apt-get install -y procps \
+    libc6-dev \
+    libgdiplus \
+    libx11-dev
+
+COPY --from=dotnet-tools /root/.dotnet/tools /root/.dotnet/tools/
+ENV PATH="${PATH}:/root/.dotnet/tools"
+
+ENV LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8
+
+ENTRYPOINT ["./run.sh"]
