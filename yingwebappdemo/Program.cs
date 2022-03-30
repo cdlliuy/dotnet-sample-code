@@ -16,6 +16,14 @@ namespace yingwebappdemo
 
         private static void ProcessExit(object? sender, EventArgs eventArgs)
         {
+            Console.WriteLine($"Process exit triggered");
+            cancellationTokenSource.Cancel();
+            shutdown();
+        }
+
+        private static void ControlCHandler(object? sender, EventArgs eventArgs)
+        {
+            Console.WriteLine($"Ctrl+C triggered");
             cancellationTokenSource.Cancel();
             shutdown();
         }
@@ -25,7 +33,8 @@ namespace yingwebappdemo
 
             try
             {
-                //AppDomain.CurrentDomain.ProcessExit += ProcessExit;
+                AppDomain.CurrentDomain.ProcessExit += ProcessExit;
+                Console.CancelKeyPress += ControlCHandler;
 
                 CreateHostBuilder(args).Build().RunAsync();
                 await pollingTasks(cancellationTokenSource);
@@ -34,12 +43,6 @@ namespace yingwebappdemo
             {
                 Console.WriteLine($"Thrown exception: {e}");
             }
-            finally
-            {
-                Console.WriteLine($"{DateTime.UtcNow} : Main: Executing of finally");
-	        shutdown();
-            }
-
 
         }
 
@@ -74,6 +77,7 @@ namespace yingwebappdemo
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                //.ConfigureHostOptions(o => o.ShutdownTimeout = TimeSpan.FromMilliseconds(100))
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
