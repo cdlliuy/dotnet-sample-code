@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yingtestapp-raw-deployment
+  labels:
+    app: yingtestapp-raw
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 25%  
+  selector:
+    matchLabels:
+      app: yingtestapp-raw
+  template:
+    metadata:
+      labels:
+        app: yingtestapp-raw
+    spec:
+      shareProcessNamespace: true
+      terminationGracePeriodSeconds: 3600
+      containers:
+      - name: yingtestapp-raw
+        image: docker.io/cdlliuy/yingtestappwindows:demo12
+        imagePullPolicy: Never #use never to load image from local
+        ports:
+        - containerPort: 80
+        env:
+        - name: DOTNET_SYSTEM_GLOBALIZATION_USENLS
+          value: "true"
+        - name: "Logging__LogLevel__Default"
+          value: "Debug"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "1024Mi"
+            cpu: "2"
+        volumeMounts:
+          - name: tmp
+            mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}

@@ -77,7 +77,7 @@ namespace yingwebappdemo
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                //.ConfigureHostOptions(o => o.ShutdownTimeout = TimeSpan.FromMilliseconds(100))
+                .ConfigureHostOptions(o => o.ShutdownTimeout = TimeSpan.FromSeconds(60))
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

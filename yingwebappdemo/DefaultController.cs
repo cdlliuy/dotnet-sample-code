@@ -14,9 +14,9 @@ namespace yingwebappdemo
         [HttpGet]
         public string Get()
         {
-            Console.WriteLine("receive a request");
+            Console.WriteLine($"{DateTime.UtcNow}:receive a request");
             System.Threading.Thread.Sleep(30 * 1000);
-            Console.WriteLine("end of a request");
+            Console.WriteLine($"{DateTime.UtcNow}:end of a request");
             return "ok";
         }
 
