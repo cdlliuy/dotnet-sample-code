@@ -54,6 +54,8 @@ namespace yingwebappdemo
             {
                 cancellationTokenSource.WaitAndExit();
             }
+            Console.WriteLine($"{DateTime.UtcNow} : Main-Shutdown: Finished the in-progressing tasks");
+            System.Threading.Thread.Sleep(60 * 1000); //keep the same shutdown timeout as web host
             Console.WriteLine($"{DateTime.UtcNow} : Main-Shutdown: Completely shutdown");
         }
 

@@ -51,8 +51,7 @@ namespace yingwebappdemo
             {
                 Console.WriteLine($"{DateTime.UtcNow} : WebApp: ApplicationStopping handler is called");
                 // this will stop the service to polling tasks any more.
-                //Program.cancellationTokenSource.Cancel();
-                //Program.shutdown();
+                Program.cancellationTokenSource.Cancel();
                 //Console.WriteLine($"{DateTime.UtcNow} : WebApp: Cancelled task polling");
             });
 
