@@ -34,9 +34,10 @@ namespace yingwebappdemo
             try
             {
                 AppDomain.CurrentDomain.ProcessExit += ProcessExit;
-                Console.CancelKeyPress += ControlCHandler;
+                //Console.CancelKeyPress += ControlCHandler;
 
                 CreateHostBuilder(args).Build().RunAsync();
+                //System.Threading.Thread.Sleep(300 * 1000);
                 await pollingTasks(cancellationTokenSource);
             }
             catch (Exception e)
@@ -77,7 +78,7 @@ namespace yingwebappdemo
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureHostOptions(o => o.ShutdownTimeout = TimeSpan.FromSeconds(60))
+                .ConfigureHostOptions(o => o.ShutdownTimeout = TimeSpan.FromSeconds(60)) //valid in .net6
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

@@ -20,7 +20,7 @@ spec:
         app: yingtestapp-raw
     spec:
       shareProcessNamespace: true
-      terminationGracePeriodSeconds: 3600
+      terminationGracePeriodSeconds: 300
       containers:
       - name: yingtestapp-raw
         image: docker.io/cdlliuy/yingtestappwindows:demo12

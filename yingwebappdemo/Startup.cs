@@ -25,6 +25,7 @@ namespace yingwebappdemo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+//            services.Configure<HostOptions>(o => o.ShutdownTimeout = TimeSpan.FromSeconds(60));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,11 +49,11 @@ namespace yingwebappdemo
 
             hostApplicationLifetime.ApplicationStopping.Register(() =>
             {
-                Console.WriteLine($"{DateTime.UtcNow} : WebApp: Shutdown the application");
+                Console.WriteLine($"{DateTime.UtcNow} : WebApp: ApplicationStopping handler is called");
                 // this will stop the service to polling tasks any more.
-                Program.cancellationTokenSource.Cancel();
+                //Program.cancellationTokenSource.Cancel();
                 //Program.shutdown();
-                Console.WriteLine($"{DateTime.UtcNow} : WebApp: Cancelled task polling");
+                //Console.WriteLine($"{DateTime.UtcNow} : WebApp: Cancelled task polling");
             });
 
             app.UseHttpsRedirection();
