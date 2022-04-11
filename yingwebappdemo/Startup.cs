@@ -47,6 +47,8 @@ namespace yingwebappdemo
                 Console.WriteLine($"{DateTime.UtcNow} : Services started");
             });
 
+            //when running with sync server, no need to run this
+            /*
             hostApplicationLifetime.ApplicationStopping.Register(() =>
             {
                 Console.WriteLine($"{DateTime.UtcNow} : WebApp: Shutdown the application");
@@ -55,6 +57,7 @@ namespace yingwebappdemo
                 //Program.shutdown();
                 Console.WriteLine($"{DateTime.UtcNow} : WebApp: Cancelled task polling");
             });
+            */
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

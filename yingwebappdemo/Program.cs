@@ -33,13 +33,14 @@ namespace yingwebappdemo
 
             try
             {
-                AppDomain.CurrentDomain.ProcessExit += ProcessExit;
+                //when running a sync-webserver, no need to register ProcessExit
+                //AppDomain.CurrentDomain.ProcessExit += ProcessExit;
                 Console.CancelKeyPress += ControlCHandler;
 
                 //To run a sync-webserver
-                //await CreateHostBuilder(args).Build().RunAsync();
-                CreateHostBuilder(args).Build().RunAsync();
-                await pollingTasks(cancellationTokenSource);
+                await CreateHostBuilder(args).Build().RunAsync();
+                //CreateHostBuilder(args).Build().RunAsync();
+                //await pollingTasks(cancellationTokenSource);
             }
             catch (Exception e)
             {
