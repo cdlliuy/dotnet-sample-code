@@ -36,6 +36,8 @@ namespace yingwebappdemo
                 AppDomain.CurrentDomain.ProcessExit += ProcessExit;
                 Console.CancelKeyPress += ControlCHandler;
 
+                //To run a sync-webserver
+                //await CreateHostBuilder(args).Build().RunAsync();
                 CreateHostBuilder(args).Build().RunAsync();
                 await pollingTasks(cancellationTokenSource);
             }
@@ -53,7 +55,9 @@ namespace yingwebappdemo
             {
                 cancellationTokenSource.WaitAndExit();
             }
-            Console.WriteLine($"{DateTime.UtcNow} : Main-Shutdown: Completely shutdown");
+            Console.WriteLine($"{DateTime.UtcNow} : Main-Shutdown: finished all tasks");
+            System.Threading.Thread.Sleep(60 * 1000); //shutdown delay to align with web server shutdown-down timeout
+            Console.WriteLine($"{DateTime.UtcNow} : Main-Shutdown: completely shutdown");
         }
 
 
@@ -77,7 +81,7 @@ namespace yingwebappdemo
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureHostOptions(o => o.ShutdownTimeout = TimeSpan.FromSeconds(60))
+               // .ConfigureHostOptions(o => o.ShutdownTimeout = TimeSpan.FromSeconds(60))
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

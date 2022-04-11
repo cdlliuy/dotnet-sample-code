@@ -24,14 +24,9 @@ spec:
       containers:
       - name: yingtestapp-raw
         image: docker.io/cdlliuy/yingtestappwindows:demo12
-        imagePullPolicy: Never #use never to load image from local
+        imagePullPolicy: Never #use never to load image from local directly
         ports:
         - containerPort: 80
-        env:
-        - name: DOTNET_SYSTEM_GLOBALIZATION_USENLS
-          value: "true"
-        - name: "Logging__LogLevel__Default"
-          value: "Debug"
         resources:
           requests:
             memory: "64Mi"

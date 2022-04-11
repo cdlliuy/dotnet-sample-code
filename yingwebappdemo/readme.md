@@ -7,17 +7,8 @@
 4.  each time,  after the source code is updated,  run `build-deploy.sh` for build and re-deploy
 
 
-# reproduce the error
+# check graceful shutdown behaviour
 
-1. get your pod ip address by "kubectl get pods -o wide"
-2. exec into another pod with support "curl", and cmd "curl http://<pod-ip>/".  After 30s, "ok" will be responded. 
-3. keep monitoring the logs of the target pod
-```
-label=yingtestapp-raw
-podname=$(kubectl get pod -l app=$label -ojsonpath="{.items[0].metadata.name}")  && kubectl logs $podname -f | grep -v "pollingTasks" | tee debug.log
-```
-4. delete the target pod in another terminal window
-```
-podname=$(kubectl get pod -l app=$label -ojsonpath="{.items[0].metadata.name}")  && kubectl delete pod $podname && date
-```
+run ./gracefulshutdown.sh yingtestapp-raw
+
 
