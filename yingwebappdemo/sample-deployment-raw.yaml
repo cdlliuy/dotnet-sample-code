@@ -23,7 +23,7 @@ spec:
       terminationGracePeriodSeconds: 300
       containers:
       - name: yingtestapp-raw
-        image: docker.io/cdlliuy/yingtestappwindows:demo12
+        image: docker.io/cdlliuy/yingtestappwindows:latest
         imagePullPolicy: Never #use never to load image from local
         ports:
         - containerPort: 80
